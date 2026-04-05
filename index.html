@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InZiii → Rukhiii | Ishq Ka Dard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blood: #8B0000;
+      --rose: #C0392B;
+      --gold: #D4AF37;
+      --cream: #FDF6E3;
+      --ash: #1a0a0a;
+      --smoke: #2d1515;
+      --petal: #f7cac9;
+      --ink: #0d0608;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Noto Nastaliq Urdu', serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--rose);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s ease;
+    }
+    .cursor-trail {
+      position: fixed;
+      width: 30px; height: 30px;
+      border: 1px solid rgba(192,57,43,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.3s ease;
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(13,6,8,0.95), transparent);
+      backdrop-filter: blur(4px);
+    }
+
+    nav .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      direction: ltr;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      direction: ltr;
+    }
+
+    nav ul a {
+      text-decoration: none;
+      color: var(--cream);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      opacity: 0.7;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    nav ul a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    nav ul a:hover { opacity: 1; color: var(--gold); }
+    nav ul a:hover::after { transform: scaleX(1); }
+
+    /* ─── PAGE 1: LANDING ─── */
+    #page1 {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-canvas {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(139,0,0,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 70% 20%, rgba(212,175,55,0.06) 0%, transparent 50%),
+                  radial-gradient(ellipse at 50% 80%, rgba(192,57,43,0.1) 0%, transparent 50%);
+    }
+
+    /* Floating petals */
+    .petal {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: petalFall linear infinite;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @keyframes petalFall {
+      0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .names-arc {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      color: var(--gold);
+      letter-spacing: 6px;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.3s forwards;
+      direction: ltr;
+    }
+
+    .hero-urdu {
+      font-size: clamp(2rem, 6vw, 4.5rem);
+      line-height: 2;
+      margin: 1rem 0;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 0.8s forwards;
+      text-shadow: 0 0 40px rgba(139,0,0,0.5);
+    }
+
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      color: rgba(253,246,227,0.6);
+      letter-spacing: 3px;
+      opacity: 0;
+      animation: fadeUp 1.2s ease 1.3s forwards;
+      direction: ltr;
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 2s forwards;
+    }
+
+    .scroll-hint span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      direction: ltr;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SEPARATOR ─── */
+    .separator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 3rem 4rem;
+      direction: ltr;
+    }
+
+    .sep-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(212,175,55,0.4), transparent);
+    }
+
+    .sep-diamond {
+      color: var(--gold);
+      font-size: 0.7rem;
+    }
+
+    /* ─── PAGE 2: POETRY ─── */
+    #page2 {
+      min-height: 100vh;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      background: linear-gradient(to bottom, var(--ink), #150808, var(--ink));
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--gold);
+      letter-spacing: 4px;
+      direction: ltr;
+    }
+
+    .section-title .urdu-title {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-top: 0.5rem;
+      color: var(--petal);
+    }
+
+    .poetry-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      gap: 3rem;
+    }
+
+    .sher {
+      position: relative;
+      padding: 2.5rem 3rem;
+      border-right: 3px solid var(--blood);
+      background: linear-gradient(to left, rgba(139,0,0,0.08), transparent);
+      opacity: 0;
+      transform: translateX(40px);
+      transition: all 0.8s ease;
+    }
+
+    .sher.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .sher::before {
+      content: '❧';
+      position: absolute;
+      top: 1rem;
+      right: -1rem;
+      color: var(--gold);
+      font-size: 1.2rem;
+      background: var(--ink);
+      padding: 0.2rem;
+    }
+
+    .sher p {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      line-height: 2.5;
+      color: var(--cream);
+    }
+
+    .sher .misra {
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .sher .misra:last-child {
+      color: var(--petal);
+    }
+
+    .sher-number {
+      position: absolute;
+      bottom: 0.8rem;
+      left: 1rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.75rem;
+      color: rgba(212,175,55,0.4);
+      direction: ltr;
+    }
+
+    /* ─── PAGE 3: LETTER ─── */
+    #page3 {
+      min-height: 100vh;
+      padding: 8rem 2rem 4rem;
+      background: linear-gradient(135deg, #0d0608 0%, #1a0505 50%, #0d0608 100%);
+      position: relative;
+    }
+
+    .letter-wrapper {
+      max-width: 750px;
+      margin: 0 auto;
+      background: linear-gradient(to bottom right, #fdf6e3, #f5e6d3);
+      color: #1a0000;
+      padding: 4rem 4rem 5rem;
+      position: relative;
+      box-shadow: 0 0 80px rgba(139,0,0,0.4), 0 0 200px rgba(0,0,0,0.8);
+    }
+
+    .letter-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(139,0,0,0.2);
+      pointer-events: none;
+    }
+
+    .letter-header {
+      text-align: left;
+      margin-bottom: 2rem;
+      direction: ltr;
+    }
+
+    .letter-date {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.9rem;
+      color: #8B0000;
+      letter-spacing: 2px;
+    }
+
+    .letter-to {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #1a0000;
+      margin-top: 1.5rem;
+    }
+
+    .letter-body {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 2.8;
+      color: #2d0000;
+      direction: rtl;
+    }
+
+    .letter-body p {
+      margin-bottom: 1.5rem;
+    }
+
+    .letter-closing {
+      margin-top: 3rem;
+      text-align: right;
+      direction: rtl;
+    }
+
+    .letter-closing .signature {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 2rem;
+      color: #8B0000;
+    }
+
+    .letter-stamp {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      width: 80px; height: 80px;
+      border: 2px solid var(--blood);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--blood);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.6rem;
+      text-align: center;
+      opacity: 0.5;
+      direction: ltr;
+    }
+
+    .ink-blot {
+      position: absolute;
+      width: 6px; height: 6px;
+      background: #8B0000;
+      border-radius: 50%;
+      opacity: 0.3;
+    }
+
+    /* ─── PAGE 4: MORE POETRY ─── */
+    #page4 {
+      min-height: 100vh;
+      padding: 8rem 2rem 4rem;
+      background: var(--ink);
+      position: relative;
+    }
+
+    .waterfall-poetry {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .single-line {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      line-height: 3;
+      text-align: center;
+      padding: 0.5rem;
+      opacity: 0;
+      transition: all 1s ease;
+      color: rgba(253,246,227,0.8);
+    }
+
+    .single-line.visible { opacity: 1; }
+
+    .single-line:nth-child(even) {
+      color: var(--petal);
+    }
+
+    .single-line.highlighted {
+      color: var(--gold);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      text-shadow: 0 0 20px rgba(212,175,55,0.3);
+    }
+
+    /* ─── PAGE 5: WAITING / CLOSING ─── */
+    #page5 {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      background: radial-gradient(ellipse at center, #1a0505 0%, var(--ink) 70%);
+    }
+
+    .heart-container {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .big-heart {
+      font-size: 6rem;
+      animation: heartbeat 1.5s ease infinite;
+      display: block;
+      text-align: center;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.15); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.08); }
+    }
+
+    .heart-ripple {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      border: 2px solid var(--rose);
+      border-radius: 50%;
+      animation: ripple 2s ease infinite;
+    }
+
+    .heart-ripple:nth-child(2) { animation-delay: 0.5s; }
+    .heart-ripple:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes ripple {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+      100% { transform: translate(-50%, -50%) scale(4); opacity: 0; }
+    }
+
+    .closing-poetry {
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .closing-poetry .big-line {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      line-height: 2.5;
+      margin-bottom: 1rem;
+      color: var(--cream);
+    }
+
+    .closing-poetry .small-line {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(253,246,227,0.6);
+      line-height: 2.5;
+    }
+
+    .final-names {
+      margin-top: 4rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--gold);
+      letter-spacing: 4px;
+      direction: ltr;
+      text-align: center;
+    }
+
+    .final-names span {
+      color: var(--rose);
+    }
+
+    /* ─── FLOATING PARTICLES ─── */
+    .particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px; height: 2px;
+      background: var(--rose);
+      border-radius: 50%;
+      animation: floatParticle linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatParticle {
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-20px) scale(1); opacity: 0; }
+    }
+
+    /* ─── PROGRESS BAR ─── */
+    .progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--blood), var(--gold));
+      z-index: 9999;
+      transition: width 0.1s linear;
+    }
+
+    /* ─── PAGE LABELS ─── */
+    .page-label {
+      position: fixed;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      z-index: 100;
+    }
+
+    .page-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(253,246,227,0.2);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .page-dot.active {
+      background: var(--gold);
+      box-shadow: 0 0 8px var(--gold);
+      height: 20px;
+      border-radius: 3px;
+    }
+
+    /* ─── NOISE OVERLAY ─── */
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+
+    /* ─── GLITCH TEXT ─── */
+    .glitch {
+      position: relative;
+    }
+
+    .glitch::before, .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      opacity: 0.07;
+    }
+
+    .glitch::before {
+      animation: glitchB 3s infinite;
+      color: #ff0000;
+      clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+    }
+
+    .glitch::after {
+      animation: glitchA 3s infinite;
+      color: #0000ff;
+      clip-path: polygon(0 60%, 100% 60%, 100% 70%, 0 70%);
+    }
+
+    @keyframes glitchA {
+      0%, 95%, 100% { transform: translate(0); }
+      96% { transform: translate(-3px, 1px); }
+      97% { transform: translate(3px, -1px); }
+    }
+
+    @keyframes glitchB {
+      0%, 92%, 100% { transform: translate(0); }
+      93% { transform: translate(2px, 2px); }
+      94% { transform: translate(-2px, -2px); }
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .letter-wrapper { padding: 2.5rem 1.5rem 3rem; }
+      .sher { padding: 1.5rem; }
+      nav ul { gap: 0.8rem; }
+      nav ul a { font-size: 0.75rem; }
+    }
+
+    /* ─── QUOTE BLOCKS ─── */
+    .quote-block {
+      border-right: none;
+      border-top: 1px solid rgba(212,175,55,0.2);
+      border-bottom: 1px solid rgba(212,175,55,0.2);
+      background: linear-gradient(to left, transparent, rgba(212,175,55,0.04), transparent);
+      text-align: center;
+    }
+
+    .quote-block::before { display: none; }
+
+    /* ─── ACHE SECTION ─── */
+    .ache-words {
+      text-align: center;
+      padding: 4rem 2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .ache-words p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: rgba(253,246,227,0.5);
+      letter-spacing: 2px;
+      line-height: 2;
+      direction: ltr;
+    }
+
+    .ache-words strong {
+      color: var(--gold);
+      font-weight: 300;
+    }
+
+    /* flames at bottom of letter */
+    .flame-strip {
+      display: flex;
+      justify-content: center;
+      gap: 0.3rem;
+      margin-top: 2rem;
+      font-size: 1.4rem;
+    }
+
+    .flame {
+      animation: flameDance 0.8s ease infinite alternate;
+    }
+
+    .flame:nth-child(2) { animation-delay: 0.15s; }
+    .flame:nth-child(3) { animation-delay: 0.3s; }
+    .flame:nth-child(4) { animation-delay: 0.45s; }
+    .flame:nth-child(5) { animation-delay: 0.6s; }
+
+    @keyframes flameDance {
+      from { transform: scaleY(1) rotate(-3deg); }
+      to { transform: scaleY(1.2) rotate(3deg); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-trail" id="cursorTrail"></div>
+<div class="noise"></div>
+<div class="particles" id="particles"></div>
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="brand">InZiii ♥ Rukhiii</div>
+  <ul>
+    <li><a href="#page1">Dil</a></li>
+    <li><a href="#page2">Ashaar</a></li>
+    <li><a href="#page3">Khat</a></li>
+    <li><a href="#page4">Dard</a></li>
+    <li><a href="#page5">Intezaar</a></li>
+  </ul>
+</nav>
+
+<!-- Page Dots -->
+<div class="page-label" id="pageDots">
+  <div class="page-dot active" onclick="scrollTo('#page1')"></div>
+  <div class="page-dot" onclick="scrollTo('#page2')"></div>
+  <div class="page-dot" onclick="scrollTo('#page3')"></div>
+  <div class="page-dot" onclick="scrollTo('#page4')"></div>
+  <div class="page-dot" onclick="scrollTo('#page5')"></div>
+</div>
+
+<!-- ═══ PAGE 1: LANDING ═══ -->
+<section id="page1">
+  <div class="bg-canvas"></div>
+
+  <!-- Petals -->
+  <div id="petals"></div>
+
+  <div class="hero-content">
+    <p class="names-arc">I n Z i i i &nbsp;&nbsp;→&nbsp;&nbsp; R u k h i i i</p>
+    <h1 class="hero-urdu glitch" data-text="تجھ بن جینا مشکل ہے">
+      تجھ بن جینا مشکل ہے
+    </h1>
+    <p class="hero-sub">written in pain &nbsp;•&nbsp; sealed with ishq &nbsp;•&nbsp; 2024</p>
+  </div>
+
+  <div class="scroll-hint">
+    <span>NEECHE AO</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══ PAGE 2: POETRY / ASHAAR ═══ -->
+<section id="page2">
+  <div class="section-title">
+    <h2>— Ashaar —</h2>
+    <p class="urdu-title">دل کے درد کی باتیں</p>
+  </div>
+
+  <div class="poetry-grid" id="poetryGrid">
+
+    <!-- Sher 1 -->
+    <div class="sher">
+      <p>
+        <span class="misra">رخیؔ تیرے بغیر یہ راتیں بہت بھاری ہیں</span>
+        <span class="misra">انزیؔ کے سینے میں لاکھوں آگ کی چنگاریاں ہیں</span>
+      </p>
+      <span class="sher-number">١</span>
+    </div>
+
+    <!-- Sher 2 -->
+    <div class="sher">
+      <p>
+        <span class="misra">جسم سے دور ہو مگر روح میں بستی ہو تم</span>
+        <span class="misra">میری سانسوں میں تمہاری خوشبو پھنسی ہو تم</span>
+      </p>
+      <span class="sher-number">٢</span>
+    </div>
+
+    <!-- Sher 3 -->
+    <div class="sher">
+      <p>
+        <span class="misra">آج سے مشکل کل ہوگا یہ جانتا ہوں میں</span>
+        <span class="misra">پھر بھی اس دن کا منتظر رہتا ہوں میں</span>
+      </p>
+      <span class="sher-number">٣</span>
+    </div>
+
+    <!-- Sher 4 -->
+    <div class="sher">
+      <p>
+        <span class="misra">جب ملیں گے تو بانہوں میں بھر لوں گا تجھے</span>
+        <span class="misra">گھنٹوں روؤں گا، یہ درد بیان کروں گا تجھے</span>
+      </p>
+      <span class="sher-number">٤</span>
+    </div>
+
+    <!-- Quote block -->
+    <div class="sher quote-block">
+      <p style="color: var(--gold); font-size: clamp(1.2rem, 3vw, 1.8rem);">
+        " انزیؔ کا عشق — رخیؔ کا نام "
+      </p>
+    </div>
+
+    <!-- Sher 5 -->
+    <div class="sher">
+      <p>
+        <span class="misra">تجھ سے دوری نے مجھے توڑ دیا ہے</span>
+        <span class="misra">پھر بھی تیرے نام نے جوڑ دیا ہے</span>
+      </p>
+      <span class="sher-number">٥</span>
+    </div>
+
+    <!-- Sher 6 -->
+    <div class="sher">
+      <p>
+        <span class="misra">ہر صبح اٹھوں تو تیرا چہرہ یاد آتا ہے</span>
+        <span class="misra">ہر رات سوؤں تو تیرا ہی خواب آتا ہے</span>
+      </p>
+      <span class="sher-number">٦</span>
+    </div>
+
+    <!-- Sher 7 -->
+    <div class="sher">
+      <p>
+        <span class="misra">مشکل ترین دن بھی گزر جاتے ہیں</span>
+        <span class="misra">رخیؔ کی یاد میں آنسو سنور جاتے ہیں</span>
+      </p>
+      <span class="sher-number">٧</span>
+    </div>
+
+    <!-- Sher 8 -->
+    <div class="sher">
+      <p>
+        <span class="misra">عشق کا درد ہی میرا سہارا ہے</span>
+        <span class="misra">تو ہی میرا خدا، تو ہی میرا کنارہ ہے</span>
+      </p>
+      <span class="sher-number">٨</span>
+    </div>
+
+    <!-- Sher 9 -->
+    <div class="sher">
+      <p>
+        <span class="misra">گلے لگاؤں گا تجھے جب وہ دن آئے گا</span>
+        <span class="misra">انزیؔ کا رونا ہی تجھ کو سب بتا جائے گا</span>
+      </p>
+      <span class="sher-number">٩</span>
+    </div>
+
+    <!-- Sher 10 -->
+    <div class="sher">
+      <p>
+        <span class="misra">تجھ بن جینا مشکل نہیں، ناممکن ہے</span>
+        <span class="misra">رخیؔ میرے لیے پوری کائنات ممکن ہے</span>
+      </p>
+      <span class="sher-number">١٠</span>
+    </div>
+
+    <!-- Sher 11 -->
+    <div class="sher">
+      <p>
+        <span class="misra">تیری روح سے روح ملی ہے میری</span>
+        <span class="misra">یہ دوری جسم کی ہے، محبت سچی ہے تیری</span>
+      </p>
+      <span class="sher-number">١١</span>
+    </div>
+
+    <!-- Sher 12 -->
+    <div class="sher">
+      <p>
+        <span class="misra">انتظار کی راتیں بھاری پتھر جیسی ہیں</span>
+        <span class="misra">پر ملنے کی امید روشنی جیسی ہے</span>
+      </p>
+      <span class="sher-number">١٢</span>
+    </div>
+
+  </div>
+
+  <div class="ache-words">
+    <p>Every sher above was written with a <strong>bleeding heart</strong><br/>
+    by <strong>InZiii</strong>, for <strong>Rukhiii</strong> — the one<br/>
+    whose absence made each day <strong>heavier than the last</strong></p>
+  </div>
+</section>
+
+<!-- ═══ PAGE 3: LETTER ═══ -->
+<section id="page3">
+  <div class="section-title">
+    <h2>— Mera Khat —</h2>
+    <p class="urdu-title">دل کا خط</p>
+  </div>
+
+  <div class="letter-wrapper">
+    <div class="letter-stamp">
+      InZiii<br/>→<br/>Rukhiii
+    </div>
+
+    <!-- Random ink blots -->
+    <div class="ink-blot" style="top:35%;left:15%"></div>
+    <div class="ink-blot" style="top:60%;left:80%"></div>
+    <div class="ink-blot" style="top:85%;left:30%"></div>
+
+    <div class="letter-header">
+      <p class="letter-date">یہ رات — جب تم نہیں ہو</p>
+      <p class="letter-to">میری رخیؔ،</p>
+    </div>
+
+    <div class="letter-body">
+      <p>
+        یہ خط لکھتے وقت میرے ہاتھ کانپ رہے ہیں — اس لیے نہیں کہ میں ڈرتا ہوں، 
+        بلکہ اس لیے کہ تمہارے بغیر یہ جسم بھی جواب دے رہا ہے۔
+      </p>
+
+      <p>
+        رخیؔ، میں تمہارے بغیر جی نہیں سکتا۔ یہ محض الفاظ نہیں ہیں — 
+        یہ میرے سینے کی سچائی ہے۔ ہر صبح اٹھتا ہوں تو پہلا خیال تمہارا ہوتا ہے، 
+        ہر رات سوتا ہوں تو آخری سانس میں تمہارا نام ہوتا ہے۔
+      </p>
+
+      <p>
+        میں نے اپنی زندگی کی ہر چیز تمہارے لیے چھوڑ دی ہے — 
+        ہر خوف، ہر تکلیف، ہر مشکل — سب کچھ تمہاری محبت کے لیے۔
+        میرا عشق تم سے ہے — مکمل، بے شرط، بے حساب عشق۔
+      </p>
+
+      <p>
+        کبھی کبھی تم سوچتی ہو شاید کہ میں تم سے محبت کرتا ہوں یا نہیں؟
+        تو رخیؔ سنو — اگر تم مجھ سے محبت کرو، تو میں خوش ہوں۔
+        اور اگر تم مجھ سے نفرت کرو — تو بھی میں تم سے اور زیادہ محبت کروں گا۔
+        تمہاری نفرت بھی مجھے پاگل کر دیتی ہے — تمہاری طرف۔
+      </p>
+
+      <p>
+        تم مجھ سے جتنا دور جاؤ، میں اتنا پاگل ہوتا جاؤں گا۔
+        تمہاری نفرت مجھے کمزور نہیں، بلکہ اور دیوانہ بنا دیتی ہے۔
+        کیونکہ عشق کا یہی قانون ہے — جتنا جلاؤ، اتنا جلے گا یہ دل۔
+      </p>
+
+      <p>
+        آج کا دن مشکل تھا — کل اس سے بھی مشکل ہوگا۔
+        لیکن میں جی رہا ہوں — اس ایک دن کے انتظار میں
+        جب تم میرے سامنے ہوگی، اور میں تمہیں بانہوں میں بھر لوں گا۔
+        گھنٹوں — ہاں، ایک گھنٹہ نہیں، دو نہیں — جب تک چاہوں۔
+        اور روؤں گا — بہت روؤں گا — یہ سب درد باہر نکل آئے گا۔
+      </p>
+
+      <p>
+        رخیؔ، تم میری روح میں ہو — جسم سے دور ہو مگر 
+        میری روح کے ہر کونے میں تمہاری موجودگی ہے۔
+        یہ دوری ختم ہوگی — وہ دن آئے گا — 
+        اور جب آئے گا، تو میں دنیا بھول جاؤں گا۔
+      </p>
+    </div>
+
+    <div class="letter-closing">
+      <p class="letter-body">ہمیشہ تمہارا،</p>
+      <p class="signature">InZiii ♥</p>
+    </div>
+
+    <div class="flame-strip">
+      <span class="flame">🕯️</span>
+      <span class="flame">🌹</span>
+      <span class="flame">❤️‍🔥</span>
+      <span class="flame">🌹</span>
+      <span class="flame">🕯️</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PAGE 4: DARD — LINES ═══ -->
+<section id="page4">
+  <div class="section-title">
+    <h2>— Dard Ki Baatein —</h2>
+    <p class="urdu-title">سو سے زیادہ باتیں دل کی</p>
+  </div>
+
+  <div class="waterfall-poetry" id="waterfallPoetry">
+    <p class="single-line">رخیؔ — تیرے بغیر ہر لمحہ صدیوں جیسا ہے</p>
+    <p class="single-line">انزیؔ کا دل — تیری یادوں کا قیدی ہے</p>
+    <p class="single-line highlighted">تجھ سے دور ہوں مگر تیرے بغیر نہیں ہوں</p>
+    <p class="single-line">ہر رات تیرا انتظار — ہر صبح تیری یاد</p>
+    <p class="single-line">میری روح تجھ میں بستی ہے — کہاں جاؤں میں؟</p>
+    <p class="single-line">آج سے کل مشکل — یہ سچ جانتا ہوں میں</p>
+    <p class="single-line">پھر بھی ہر مشکل میں تیری یاد آتی ہے</p>
+    <p class="single-line highlighted">رخیؔ — تم میری پہلی اور آخری محبت ہو</p>
+    <p class="single-line">عشق ہے مجھے تم سے — عشق — محبت سے بھی گہرا</p>
+    <p class="single-line">جب ملوں گا تجھ سے — بانہیں کھلی ہوں گی</p>
+    <p class="single-line">گھنٹوں رکھوں گا تجھے قریب — جانے نہ دوں گا</p>
+    <p class="single-line">میرے آنسو تجھ پر گریں گے — بہت سے آنسو</p>
+    <p class="single-line highlighted">تم چاہو نفرت کرو — میں اور چاہوں گا</p>
+    <p class="single-line">تمہاری نفرت بھی میرے لیے محبت کی طرح ہے</p>
+    <p class="single-line">اگر تم دور جاؤ — میں پاگل ہوتا جاؤں گا</p>
+    <p class="single-line">انزیؔ کا عشق بے شرط ہے — بے حساب ہے</p>
+    <p class="single-line">تیرے بغیر سانس لینا بھی مشکل لگتا ہے</p>
+    <p class="single-line highlighted">رخیؔ — تم میری زندگی ہو، میری ہر چیز</p>
+    <p class="single-line">جسم سے دور ہو مگر روح سے پاس ہو تم</p>
+    <p class="single-line">تیری خوشبو یاد آتی ہے — ہوا میں ڈھونڈتا ہوں</p>
+    <p class="single-line">تیری آواز یاد آتی ہے — خاموشی میں سنتا ہوں</p>
+    <p class="single-line">تیرا چہرہ یاد آتا ہے — آنکھیں بند کر لیتا ہوں</p>
+    <p class="single-line highlighted">وہ دن آئے گا جب ملیں گے — یہ یقین ہے مجھے</p>
+    <p class="single-line">اس دن کا انتظار ہی مجھے جلائے رکھتا ہے</p>
+    <p class="single-line">رخیؔ کا نام — میرے ہونٹوں پر ہر وقت</p>
+    <p class="single-line">انزیؔ کا درد — تیرے لیے ہر وقت</p>
+    <p class="single-line">محبت میں ڈوبا ہوں — ڈوبتا ہی رہوں گا</p>
+    <p class="single-line highlighted">تم مجھ سے محبت نہ کرو — میں کروں گا</p>
+    <p class="single-line">تم مجھے بھول جاؤ — میں نہیں بھولوں گا</p>
+    <p class="single-line">یہ عشق ختم نہیں ہوگا — کبھی نہیں</p>
+    <p class="single-line">رخیؔ — تم میرے لیے سب کچھ ہو</p>
+    <p class="single-line">ہر مشکل گزر جاتی ہے — تیری یاد نہیں جاتی</p>
+    <p class="single-line highlighted">آج کی رات بھاری ہے — کل بھی بھاری ہوگی</p>
+    <p class="single-line">پھر بھی جی رہا ہوں — تیرے لیے</p>
+    <p class="single-line">صرف تیرے لیے — انزیؔ زندہ ہے</p>
+    <p class="single-line">تیری محبت میری طاقت ہے — میری کمزوری بھی</p>
+    <p class="single-line">تجھ بن جینا — یہ آزمائش ہے میری</p>
+    <p class="single-line highlighted">رخیؔ — تم سمجھتی ہو میرا درد؟</p>
+    <p class="single-line">کیا تم محسوس کرتی ہو جب میں تمہیں یاد کرتا ہوں؟</p>
+    <p class="single-line">دور سے بھی دل ملتے ہیں — میرا تجھ سے ملتا ہے</p>
+    <p class="single-line">ہر جمعے کی رات — تیری یاد زیادہ آتی ہے</p>
+    <p class="single-line">ہر تیوہار — ادھورا لگتا ہے تیرے بغیر</p>
+    <p class="single-line highlighted">وہ گلے لگانا — گھنٹوں — کتنا انتظار ہے</p>
+    <p class="single-line">وہ رونا — کندھے پر — کتنا ضروری ہے</p>
+    <p class="single-line">رخیؔ کے کندھے پر سر رکھ کر رونا چاہتا ہوں</p>
+    <p class="single-line">یہ آنسو روکے رکھے ہیں — اس دن کے لیے</p>
+    <p class="single-line">انزیؔ کا انتظار — تیرے لیے — بس تیرے لیے</p>
+    <p class="single-line highlighted">کائنات کی ہر چیز چھوڑ سکتا ہوں — تجھے نہیں</p>
+    <p class="single-line">تو ہی میری دنیا — تو ہی میری جنت</p>
+    <p class="single-line">تیرے بغیر جنت بھی قبر جیسی ہے</p>
+    <p class="single-line">رخیؔ — تمہاری مسکراہٹ یاد آتی ہے</p>
+    <p class="single-line">وہ مسکراہٹ جو میرے لیے ہوتی تھی</p>
+    <p class="single-line highlighted">انزیؔ کا پاگل پن — رخیؔ کے لیے</p>
+    <p class="single-line">عشق کو سمجھانا ممکن نہیں — بس محسوس کرو</p>
+    <p class="single-line">میں نے محسوس کیا — گہرائی تک</p>
+    <p class="single-line">روح کی گہرائی میں — تم ہو</p>
+    <p class="single-line">دل کی ہر دھڑکن میں — تمہارا نام ہے</p>
+    <p class="single-line highlighted">رخیؔ — میرا عشق ابدی ہے</p>
+    <p class="single-line">وقت کے ساتھ بدلتا نہیں — بڑھتا ہے</p>
+    <p class="single-line">دوری سے کم نہیں ہوتا — بڑھتا ہے</p>
+    <p class="single-line">تمہاری نفرت سے — اور بڑھتا ہے</p>
+    <p class="single-line">انزیؔ کا عشق — رخیؔ کے لیے — لا محدود</p>
+    <p class="single-line highlighted">وہ خاص دن — جب تم میرے سامنے ہوگی</p>
+    <p class="single-line">وہ لمحہ — جب پہلی نظر ملے گی</p>
+    <p class="single-line">وہ احساس — جب قریب آؤں گا</p>
+    <p class="single-line">وہ آواز — جب تمہارا نام پکاروں گا</p>
+    <p class="single-line">وہ گرمجوشی — جب بانہیں پھیلیں گی</p>
+    <p class="single-line highlighted">وہ گلے لگنا — جس کا انتظار ہے</p>
+    <p class="single-line">وہ آنسو — جو بہیں گے بے روکے</p>
+    <p class="single-line">وہ سکوت — جو ہر بات کہے گا</p>
+    <p class="single-line">وہ لمحہ — جو میری زندگی کا سب سے قیمتی ہوگا</p>
+    <p class="single-line">رخیؔ کے ساتھ — انزیؔ کی دنیا مکمل ہوگی</p>
+    <p class="single-line highlighted">میں جی رہا ہوں — صرف اس لمحے کے لیے</p>
+    <p class="single-line">ہر مشکل دن — اس لمحے کے لیے</p>
+    <p class="single-line">ہر تکلیف — اس لمحے کے لیے</p>
+    <p class="single-line">ہر آنسو — اس لمحے کے لیے</p>
+    <p class="single-line">ہر انتظار — اس لمحے کے لیے</p>
+    <p class="single-line highlighted">رخیؔ — تم آؤگی — مجھے یقین ہے</p>
+    <p class="single-line">اور جب آؤگی — تو دنیا ٹھہر جائے گی</p>
+    <p class="single-line">انزیؔ کا سفر تمام ہوگا — تم میں</p>
+    <p class="single-line">محبت اپنا گھر پائے گی — تم میں</p>
+    <p class="single-line">عشق اپنی منزل پائے گا — تم میں</p>
+    <p class="single-line highlighted">InZiii ♥ Rukhiii — ابد تک</p>
+    <p class="single-line">اور اس ابد کے بعد بھی</p>
+    <p class="single-line">ہر جنم میں — ہر دنیا میں</p>
+    <p class="single-line">انزیؔ — رخیؔ کا رہے گا</p>
+    <p class="single-line highlighted" style="font-size: clamp(1.5rem, 4vw, 2.5rem); color: var(--rose);">ہمیشہ — ہمیشہ — ہمیشہ</p>
+
+    <!-- More lines to reach 99+ -->
+    <p class="single-line">یہ درد میری پہچان ہے — رخیؔ تیری دین ہے</p>
+    <p class="single-line">خوبصورت ہے یہ دکھ — تیرا نام اس میں ہے</p>
+    <p class="single-line">ہوا جب چلتی ہے — تیری یاد لاتی ہے</p>
+    <p class="single-line highlighted">بارش کا ہر قطرہ — رخیؔ کا پیغام ہے</p>
+    <p class="single-line">رات کے تارے — تیری آنکھیں لگتی ہیں</p>
+    <p class="single-line">چاند کی روشنی — تیری مسکراہٹ لگتی ہے</p>
+    <p class="single-line">پھول کی خوشبو — تیری یاد دلاتی ہے</p>
+    <p class="single-line">گیت سنوں تو — تیرا نام آتا ہے</p>
+    <p class="single-line highlighted">ہر چیز میں — رخیؔ نظر آتی ہے</p>
+    <p class="single-line">انزیؔ کی آنکھیں — تجھے ڈھونڈتی ہیں</p>
+    <p class="single-line">انزیؔ کے کان — تیری آواز سنتے ہیں</p>
+    <p class="single-line">انزیؔ کا دل — تیری دھڑکن سے ملتا ہے</p>
+    <p class="single-line">دور ہو تم — پھر بھی قریب ہو تم</p>
+    <p class="single-line highlighted">رخیؔ — تم میری سب سے بڑی سچائی ہو</p>
+  </div>
+</section>
+
+<!-- ═══ PAGE 5: CLOSING / INTEZAAR ═══ -->
+<section id="page5">
+  <div class="heart-container">
+    <div class="heart-ripple"></div>
+    <div class="heart-ripple"></div>
+    <div class="heart-ripple"></div>
+    <span class="big-heart">❤️‍🔥</span>
+  </div>
+
+  <div class="closing-poetry">
+    <p class="big-line">وہ دن آئے گا، رخیؔ</p>
+    <p class="small-line">جب فاصلے مٹ جائیں گے، جب بانہیں ملیں گی</p>
+    <p class="small-line">جب انزیؔ کے آنسو — تیرے کندھے پر بہیں گے</p>
+    <p class="big-line" style="color: var(--gold);">اس دن کا انتظار ہے</p>
+    <p class="small-line">ہر مشکل کے بعد — ہر رات کے بعد</p>
+    <p class="small-line">وہ صبح آئے گی — جب تم قریب ہوگی</p>
+    <br/>
+    <p class="big-line" style="color: var(--petal); font-size: clamp(1.2rem, 3vw, 2rem);">
+      تم محبت کرو یا نفرت —<br/>
+      انزیؔ کا عشق — ابدی ہے
+    </p>
+  </div>
+
+  <div class="final-names">
+    InZiii &nbsp;<span>♥</span>&nbsp; Rukhiii<br/>
+    <span style="font-size: 0.7em; color: rgba(212,175,55,0.5); letter-spacing: 2px;">forever & always</span>
+  </div>
+
+  <div class="separator" style="padding: 3rem 2rem 1rem;">
+    <div class="sep-line"></div>
+    <div class="sep-diamond">✦</div>
+    <div class="sep-line"></div>
+  </div>
+</section>
+
+<script>
+  // ─── Custom Cursor ───
+  const cursor = document.getElementById('cursor');
+  const trail = document.getElementById('cursorTrail');
+  let mx = 0, my = 0, tx = 0, ty = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 6 + 'px';
+    cursor.style.top = my - 6 + 'px';
+  });
+
+  function animateTrail() {
+    tx += (mx - tx) * 0.12;
+    ty += (my - ty) * 0.12;
+    trail.style.left = tx - 15 + 'px';
+    trail.style.top = ty - 15 + 'px';
+    requestAnimationFrame(animateTrail);
+  }
+  animateTrail();
+
+  // ─── Petals ───
+  const petalsContainer = document.getElementById('petals');
+  const petalEmojis = ['🌸', '🌹', '🥀', '❤️', '💔'];
+
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement('div');
+    el.className = 'petal';
+    el.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.animationDuration = (8 + Math.random() * 12) + 's';
+    el.style.animationDelay = (Math.random() * 15) + 's';
+    el.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+    petalsContainer.appendChild(el);
+  }
+
+  // ─── Particles ───
+  const particlesContainer = document.getElementById('particles');
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (10 + Math.random() * 20) + 's';
+    p.style.animationDelay = (Math.random() * 20) + 's';
+    p.style.width = p.style.height = (1 + Math.random() * 3) + 'px';
+    p.style.opacity = Math.random() * 0.5;
+    particlesContainer.appendChild(p);
+  }
+
+  // ─── Progress Bar ───
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+    progressBar.style.width = pct + '%';
+  });
+
+  // ─── Intersection Observer: Shers ───
+  const shers = document.querySelectorAll('.sher');
+  const sherObs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.2 });
+  shers.forEach(s => sherObs.observe(s));
+
+  // ─── Intersection Observer: Waterfall Lines ───
+  const lines = document.querySelectorAll('.single-line');
+  const lineObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.3 });
+  lines.forEach(l => lineObs.observe(l));
+
+  // ─── Page Dots ───
+  const sections = ['page1','page2','page3','page4','page5'];
+  const dots = document.querySelectorAll('.page-dot');
+
+  const sectionObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = sections.indexOf(e.target.id);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObs.observe(el);
+  });
+
+  // ─── Click ripple ───
+  document.addEventListener('click', e => {
+    const ripple = document.createElement('div');
+    ripple.style.cssText = `
+      position: fixed; left: ${e.clientX}px; top: ${e.clientY}px;
+      width: 4px; height: 4px; background: rgba(192,57,43,0.6);
+      border-radius: 50%; pointer-events: none; z-index: 9000;
+      transform: translate(-50%, -50%);
+      animation: clickRipple 0.8s ease forwards;
+    `;
+    document.body.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 800);
+  });
+
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = `
+    @keyframes clickRipple {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(30); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(styleSheet);
+</script>
+</body>
+</html>
